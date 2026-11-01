@@ -1,0 +1,140 @@
+<html lang=en>
+	<head>
+		<title>Bike Cost</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="03style.css">
+		<style>
+			:focus {
+				outline: 3px solid black;
+			}
+		</style>
+		<script>
+			const muscle_bike_charge = 20;
+			const electric_bike_charge = 55;
+			const insurance_rate = 0.01;
+			const local_discount_rate = 0.05;
+			
+			function read_radios(id) {
+				let radio_buttons = document.getElementsByName(id);
+				for (let button of radio_buttons) {
+					    if (button.checked) {
+							status = button.value;
+						}
+				}
+				return(status);
+			}
+			
+			function days_between(str_earlier_date, str_later_date) {
+				earlier_date = str_to_date(str_earlier_date)
+				later_date = str_to_date(str_later_date)
+				let time_difference = later_date - earlier_date;
+				let day_difference = Math.ceil(time_difference / (1000 * 3600 * 24)) + 1;
+				return day_difference
+			}
+			
+			function str_to_date(a_date) {
+				return new Date(a_date);
+			}
+		
+			function find_price() {
+				let start_date = document.getElementById("txt_start_date").value;
+				let end_date = document.getElementById("txt_end_date").value;
+				length_of_hire = days_between(start_date, end_date);
+				let initial_cost = document.getElementById("txt_m_bikes").value * muscle_bike_charge * length_of_hire;
+				initial_cost += document.getElementById("txt_e_bikes").value * electric_bike_charge * length_of_hire;
+				// Add Insurance
+				if (document.getElementById("chk_insurance").checked) {
+					insurance = initial_cost * insurance_rate;
+				}
+				else {
+					insurance = 0;
+				}
+				
+				if (read_radios("rbo_resident") == "yes") {
+					discount = initial_cost * local_discount_rate;
+				}
+				else {
+					discount = 0;
+				} 
+				
+				let final_cost = initial_cost  - discount + insurance;
+				let initial_cost_out = initial_cost.toFixed(2);
+				let insurance_out = insurance.toFixed(2);
+				let discount_out = discount.toFixed(2);
+				let final_cost_out = final_cost.toFixed(2)
+				message = "Length of Hire " + length_of_hire;
+				message += "<br>Intial Cost of Bikes £" + initial_cost_out;
+				
+				if (insurance > 0) {
+					message += "<br>Plus Insurance £" + insurance_out;
+				}
+				if (discount > 0) {
+					message += "<br>Less discount £" + discount_out;
+				}
+				
+				message += "<br>Final Price £" + final_cost_out;
+				document.getElementById("output").innerHTML = message;
+			}
+		</script>
+	</head>
+	<body>
+		<h1 style="text-align:left" aria = "Book your bike hire here" >Bike Hire</h1>
+		<div class = "grid-container">
+			<div>
+				<label for="txt_start_date">Start date</label>
+			</div>
+			<div>
+				<input id="txt_start_date" type = "date">
+			</div>
+			<div>
+				<label for="txt_end_date">End date</label>
+			</div>
+			<div>
+				<input id="txt_end_date" type = "date">
+			</div>
+			<div>
+				<label for = "txt_e_bikes">Electric Bikes</label>
+			</div>
+			<div>
+				<input type="number" style="width: 50px" id = "txt_e_bikes" value = "2">
+			</div>
+			<div>
+				<label for = "txt_m_bikes">Muscle Bikes</label>
+			</div>
+			<div>
+				<input type="number" style="width: 50px" id = "txt_m_bikes" value="0">
+			</div>
+			<div>
+				Local Resident
+			</div>
+			<div>
+				<input name="rbo_resident" id= "rbo_is_resident" type = "radio" value="yes" aria-label="Option Yes for local resident"><label for ="rbo_is_resident" >Yes</label>
+				<input name="rbo_resident" id = "rbo_not_resident" type = "radio" value = "no" aria-label="Option No for local resident" checked><label for ="rbo_not_resident">No</label>
+			</div>
+			<div>
+				Insurance 
+			</div>
+			<div>
+				<input type = "checkbox" name = "chk_insurance" id = "chk_insurance" aria-label="Ucheck if you do not want insurance" checked>
+			</div>
+			<div>
+				<label for="frame">Frame Size</label>
+			</div>
+			<div>
+				<select id = "frame">
+					<option value = "0">Small</option>
+					<option value = "1">Medium</option>
+					<option value = "2">Large</option>
+				</select>
+			</div>
+			<div>
+			</div>
+			<div>
+				<button onclick="find_price()" >Find Price</button>
+			</div>
+
+		</div>
+		<div id="output" aria-live="polite" class = "centred output_area">
+		</div>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+body {
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+  font-size: 16pt;
+  color: #0F5298;
+  background-color: #66D3FA;
+  text-align: center;
+}
+
+button {
+	  text-align: center;
+	  width: 200px;
+	  font-family: Tahoma, Verdana, Arial, sans-serif;
+	  font-size: 16pt;
+	  color: #0F5298;
+	  font-weight: bold;
+}
+
+div {
+	margin-bottom: 15px;
+}
+
+.centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+.output_area {
+	font-size: 120%;
+}
+
+.text_box {
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+  font-size: 16pt;
+  color: #0F5298;
+  width:190px;
+  text-align: center;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: 200px 200px 200px 200px;
+	text-align: left;
+}
+
+#container {
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
